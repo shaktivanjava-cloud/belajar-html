@@ -1,28 +1,73 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-	<title>Belajar</title>
-<style>
-	body
-	{background-color: #e6e6e6;}
-	h1
-	{color: #003d66;}
-	p {color: #cc00ff;}
-</style>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Canvas Example</title>
+  <style>
+    body { font-family: system-ui, Arial; margin: 1rem; background:#f3f3f3; }
+    #canvasWrap { max-width: 800px; margin: 0 auto; background: white; padding: 1rem; border-radius:8px; }
+    canvas { width:100%; height:400px; display:block; border:1px solid #ddd; touch-action: none; }
+  </style>
 </head>
 <body>
-	<h1 style="text-align: center; font-family: Roboto;">Belajar Html </h1>
-	<div>
-		<h1>belajar html</h1>
-		<p style="text-align: center; font-family: Arial;">
-			Banyak orang bego gak mau belajar karena gak tau bahwa orang itu bego.
-			tapi ada lagi yang lebih bego, yaitu orang yang bilang dirinya bego
-			biar kelihatan pinter. sedangkan orang pinternya hanya planga-plongo
-			kayak orang bego, sehingga orang-orang bego lainnya jadi sangat yakin
-			bahwa dia benar-benar bego. mikir kayak gini saja sudah kelihatan bahwa
-			yang nulis halaman ini adalah orang bego kurang kerjaan. udah bego,
-			nganggur lagi.
-		</p>
-	</div>
+  <h2>Contoh Canvas — bentuk + coret-coret</h2>
+  <div id="canvasWrap">
+    <canvas id="c"></canvas>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+
+    // atur ukuran canvas berdasarkan CSS size * devicePixelRatio untuk hasil tajam
+    function resizeCanvas() {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = Math.round(rect.width * dpr);
+      canvas.height = Math.round(rect.height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // scale drawing ke CSS pixels
+      redraw(); // gambar ulang saat resize
+    }
+
+    function redraw() {
+      // bersihkan
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      // gambar contoh: gradient, lingkaran, garis
+      const g = ctx.createLinearGradient(0,0,canvas.width/2,0);
+      g.addColorStop(0,'#4facfe');
+      g.addColorStop(1,'#00f2fe');
+      ctx.fillStyle = g;
+      ctx.fillRect(10,10,120,80);
+
+      ctx.beginPath();
+      ctx.arc(220,60,40,0,Math.PI*2);
+      ctx.fillStyle = '#ffcc66';
+      ctx.fill();
+      ctx.strokeStyle = '#cc8800';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(300,20);
+      ctx.lineTo(380,100);
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+
+    // fitur menggambar oleh user (basic)
+    let drawing = false;
+    function pointerDown(e) { drawing = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); }
+    function pointerMove(e) { if (!drawing) return; ctx.lineTo(e.offsetX, e.offsetY); ctx.strokeStyle = '#000'; ctx.lineWidth = 2; ctx.stroke(); }
+    function pointerUp() { drawing = false; }
+
+    canvas.addEventListener('pointerdown', pointerDown);
+    canvas.addEventListener('pointermove', pointerMove);
+    window.addEventListener('pointerup', pointerUp);
+    window.addEventListener('resize', resizeCanvas);
+
+    // init
+    resizeCanvas();
+  </script>
 </body>
 </html>
