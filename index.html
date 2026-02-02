@@ -6,11 +6,17 @@
 		<style>
 			.kotak {
 				display: flex;
+				flex-direction: column;
 				gap: 10px;
 			}
 			.kotak div {
 				border: 1px solid black;
 				padding: 10px;
+			}
+			@media (min-width: 600px) {
+				.kotak {
+					flex-direction: row;
+				}
 			}
 		</style>
 		</head>
