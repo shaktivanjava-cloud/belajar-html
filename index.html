@@ -81,11 +81,8 @@
 		</head>
 <body>
 <main>
-  <h2>Home</h2>
-  <p>Selamat datang di halaman Home</p>
-</main>
 	<div class="app">
-		<div class="header">Aplikasi Saya</div>
+		<div class="header">Home</div>
 		<main class="content">
 			<div class="kotak">Item 1</div>
 			<div class="kotak">Item 2</div>
@@ -101,33 +98,13 @@
 <script>
 document.querySelectorAll('.bottom-nav .btn').forEach(b =>
   b.onclick = _ => {
-    // pindahkan tombol aktif
+    // Pindahkan tombol aktif
     document.querySelector('.bottom-nav .btn.active').classList.remove('active');
     b.classList.add('active');
 
-    // ganti isi main sesuai tombol
-    const main = document.querySelector('main');
-    if(b.textContent === 'Home'){
-      main.innerHTML = '<h2>Home</h2><p>Selamat datang di halaman Home</p>';
-    } else if(b.textContent === 'Menu'){
-      main.innerHTML = `
-        <h2>Menu</h2>
-        <div class="kotak">Item 1</div>
-        <div class="kotak">Item 2</div>
-        <div class="kotak">Item 3</div>
-        <div class="kotak">Item 4</div>
-      `;
-    } else if(b.textContent === 'Info'){
-      main.innerHTML = `
-        <h2>Info</h2>
-        <p>Informasi aplikasi dan berita terbaru</p>
-      `;
-    } else if(b.textContent === 'Profil'){
-      main.innerHTML = `
-        <h2>Profil</h2>
-        <p>Nama pengguna, pengaturan, dan lainnya</p>
-      `;
-    }
+    // Ganti teks di header sesuai tombol
+    const header = document.querySelector('.header');
+    header.textContent = b.textContent;
   }
 );
 </script>
