@@ -94,6 +94,9 @@
 				<div class="btn">Profil</div>
 			</div>
 	</main>
+	<script>
+		document.querySelectorAll('.bottom-nav .btn').forEach(b=>b.onclick=_=>{document.querySelector('.btn.active').classlist.remove('active');b.classlist.add('active');});
+	</script>
 </body>
 
 </html>
