@@ -1,6 +1,55 @@
 <!DOCTYPE html>
 <html lang="id">
   <head>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f2f2f2;
+}
+.status-bar {
+  height: 24px;
+  background: #ccc;
+}
+.top-bar {
+  height: 56px;
+  background: #ddd;
+  display: flex;
+  align-item: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+.top-bar .menu,
+.tob-bar .notif {
+  font-size: 20px;
+}
+.content {
+  flex: 1;
+  padding: 16px;
+  background: #eee;
+  overflow-y: auto;
+}
+.bottom-nav {
+  height: 56px;
+  background: #ddd;
+  display: flex;
+  justify-content: space-around;
+  align-item: center;
+}
+.bottom-nav .nav-item {
+  text-align: center;
+  flex: 1;
+  padding: 8px 0;
+}
+.bottom-nav .nav-item.active {
+  border-top: 2px solid #333;
+}
     <meta charset="UTF-8">
     <meta name="viewport" content="width-device, initial-scale=1.0">
     <title>PWA1</title>
