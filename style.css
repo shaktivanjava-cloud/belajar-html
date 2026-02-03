@@ -22,3 +22,28 @@ body {
   justify-content: space-between;
   padding: 0 16px;
 }
+.top-bar .menu,
+.tob-bar .notif {
+  font-size: 20px;
+}
+.content {
+  flex: 1;
+  padding: 16px;
+  background: #eee;
+  overflow-y: auto;
+}
+.bottom-nav {
+  height: 56px;
+  background: #ddd;
+  display: flex;
+  justify-content: space-around;
+  align-item: center;
+}
+.bottom-nav .nav-item {
+  text-align: center;
+  flex: 1;
+  padding: 8px 0;
+}
+.bottom-nav .nav-item.active {
+  border-top: 2px solid #333;
+}
