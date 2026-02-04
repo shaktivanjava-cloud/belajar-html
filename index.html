@@ -1,113 +1,88 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>BElAJAR v2</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<style>
-			body {
-				margin: 0;
-				font-family: Arial, sans-serif;
-				background: #ffebcd;
-			}
-			main {
-				margin-bottom: 60px;
-			}
-			.app {
-				max-width: 480px;
-				margin: 0 auto;
-				background: #f5f5DC;
-				min-height: 100vh;
-			}
-			.header {
-				background: #1976d2;
-				color: white;
-				padding: 15px;
-				text-align: center;
-				font-weight: bold;
+<head>
+    <title>APP1</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: #1d1b1b;
+        }
+        main {
+            padding-bottom: 60px;
+        }
+        .btn-menu {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 8%;
+            background-color: #000000;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+        }
+        .menu-left, .burger {
+            font-size: 30px;
+            cursor: pointer;
+            color: white; /* default nonaktif */
+            transition: color 0.25s;
+        }
+        .menu-left.active, .burger.active {
+            color: #fbff00; /* warna aktif */
+        }
+        .gallery {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 25px;
+        }
 
-				position: fixed;
-				top: 0;
-				left: 0;
-				right: 0;
-			}
-			.content {
-				padding: 15px;
-				padding-top: 70px;
-				padding-bottom: 70px;
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
-			}
-			.kotak {
-				border: 1px solid #ccc;
-				padding: 15px;
-				border-radius: 8px;
-				text-align: center;
-			}
-			.bottom-nav {
-				position: fixed;
-				bottom: 0;
-				left: 50%;
-				transform: translateX(-50%);
-				width: 100%;
-				max-width: 480px;
-
-				display: flex;
-				justify-content: space-around;
-
-				background: #ffffff;
-				border-top: 1px solid #ccc;
-				padding: 10px 0;
-				z-index: 10;
-			}
-			.bottom-nav div {
-				font-size: 14px;
-				text-align: center;
-			}
-			.btn {
-				padding: 10px;
-				flex: 1;
-				text-align: center;
-				font-size: 14px;
-			}
-			.btn:active {
-				background: #e0e0e0;
-			}
-			.active {
-				color: #1976d2;
-				font-weight: bold;
-			}
-		</style>
-		</head>
+.item {
+    background-color: #103c84;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1 / 1.5; /* kotak persegi */
+    border-radius: 8px;
+    font-size: 20px;
+}
+    </style>
+</head>
 <body>
-<main>
-	<div class="app">
-		<div class="header">Home</div>
-		<main class="content">
-			<div class="kotak">Item 1</div>
-			<div class="kotak">Item 2</div>
-			<div class="kotak">Item 3</div>
-			<div class="kotak">Item 4</div>
-			<div class="bottom-nav">
-				<div class="btn active">Home</div>
-				<div class="btn">Menu</div>
-				<div class="btn">Info</div>
-				<div class="btn">Profil</div>
-			</div>
-	</main>
-<script>
-document.querySelectorAll('.bottom-nav .btn').forEach(b =>
-  b.onclick = _ => {
-    // Pindahkan tombol aktif
-    document.querySelector('.bottom-nav .btn.active').classList.remove('active');
-    b.classList.add('active');
+    <main>
+        <div class="gallery">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+            <div class="item">6</div>
+            <div class="item">7</div>
+            <div class="item">8</div>
+        </div>
+    </main>
+        <div class="btn-menu">
+            <div class="menu-left">&#9881;</div>
+            <div class="burger">&#9776;</div>
+        </div>
+    <script>
+        const buttons = document.querySelectorAll('.menu-left, .burger');
 
-    // Ganti teks di header sesuai tombol
-    const header = document.querySelector('.header');
-    header.textContent = b.textContent;
-  }
-);
-</script>
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // matikan tombol lain
+                buttons.forEach(b => {
+                    if(b !== btn) b.classList.remove('active');
+                });
+
+                // toggle tombol yang diklik
+                btn.classList.toggle('active');
+            });
+        });
+    </script>
 </body>
-
 </html>
