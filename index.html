@@ -1,88 +1,140 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>APP1</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-            background-color: #1d1b1b;
-        }
-        main {
-            padding-bottom: 60px;
-        }
-        .btn-menu {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 8%;
-            background-color: #000000;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 1000;
-        }
-        .menu-left, .burger {
-            font-size: 30px;
-            cursor: pointer;
-            color: white; /* default nonaktif */
-            transition: color 0.25s;
-        }
-        .menu-left.active, .burger.active {
-            color: #fbff00; /* warna aktif */
-        }
-        .gallery {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 25px;
-        padding: 25px;
-        }
-
-.item {
-    background-color: #103c84;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    aspect-ratio: 1 / 1.5; /* kotak persegi */
-    border-radius: 8px;
-    font-size: 20px;
-}
-    </style>
-</head>
+<title>APP2</title>
+<meta name="viewport" content="width=device-width, initial-scale= 1.0">
 <body>
-    <main>
-        <div class="gallery">
-            <div class="item">1</div>
-            <div class="item">2</div>
-            <div class="item">3</div>
-            <div class="item">4</div>
-            <div class="item">5</div>
-            <div class="item">6</div>
-            <div class="item">7</div>
-            <div class="item">8</div>
-        </div>
-    </main>
-        <div class="btn-menu">
-            <div class="menu-left">&#9881;</div>
-            <div class="burger">&#9776;</div>
-        </div>
-    <script>
-        const buttons = document.querySelectorAll('.menu-left, .burger');
+    <style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #011228;
+        overflow: hidden;
+    }
+    header {
+        background: #02132c;
+        color: #cce7f5;
+        padding: 15px;
+        text-align: center;
+        font-weight: bold;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height:40px;
+    }
+    footer {
+        background: #00040a;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-weight: bold;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+    }
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 40px;
+        bottom: 40px;
+        overflow: auto;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        scrollbar-width: none;
+    }
+    main::-webkit-scrollbar {
+        display: none;
+    }
+    #scroll-indicator {
+        position: fixed;
+        right: 4px;
+        top: 46px;
+        width: 4px;
+        border-radius: 4px;
+        background: rgba(0,0,0,0.4);
+        opacity: 0;
+        transition: opacity 0.3s;
+        pointer-events: none;
+        z-index: 999;
+    }
+    * {
+        box-sizing: border-box;
+    }
+</style>
+<header></header>
+<main id="content">
+        <button>Setting 1</button><br><br>
+        <button>Setting 2</button><br><br>
+        <button>Setting 3</button><br><br>
+        <button>Setting 4</button><br><br>
+        <button>Setting 5</button><br><br>
+        <button>Setting 6</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+        <button>Setting 7</button><br><br>
+</main>
+<div id="scroll-indicator"></div>
+<footer></footer>
+<script>
+    const content = document.getElementById("content");
+const indicator = document.getElementById("scroll-indicator");
+let hideTimer;
 
-        buttons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // matikan tombol lain
-                buttons.forEach(b => {
-                    if(b !== btn) b.classList.remove('active');
-                });
+function updateIndicator() {
+    const scrollTop = content.scrollTop;
+    const scrollHeight = content.scrollHeight;
+    const clientHeight = content.clientHeight;
 
-                // toggle tombol yang diklik
-                btn.classList.toggle('active');
-            });
-        });
-    </script>
+    const ratio = clientHeight / scrollHeight;
+    const indicatorHeight = Math.max(clientHeight * ratio, 20);
+
+    const maxScroll = scrollHeight - clientHeight;
+    const top = (scrollTop / maxScroll) * (clientHeight - indicatorHeight);
+
+    const headerHeight = document.querySelector("header").offsetHeight;
+    indicator.style.height = indicatorHeight + "px";
+    indicator.style.top = (headerHeight + top) + "px";
+
+    indicator.style.opacity = 1;
+
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => {
+        indicator.style.opacity = 0;
+    }, 700);
+}
+
+content.addEventListener("scroll", updateIndicator);
+
+</script>
 </body>
 </html>
