@@ -1,140 +1,217 @@
 <!DOCTYPE html>
-<html>
-<title>APP2</title>
-<meta name="viewport" content="width=device-width, initial-scale= 1.0">
-<body>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>BElAJAR v2 - Full App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #011228;
-        overflow: hidden;
-    }
-    header {
-        background: #02132c;
-        color: #cce7f5;
-        padding: 15px;
-        text-align: center;
-        font-weight: bold;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height:40px;
-    }
-    footer {
-        background: #00040a;
-        color: white;
-        padding: 15px;
-        text-align: center;
-        font-weight: bold;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 40px;
-    }
-    main {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        position: fixed;
-        left: 0;
-        right: 0;
-        top: 40px;
-        bottom: 40px;
-        overflow: auto;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        scrollbar-width: none;
-    }
-    main::-webkit-scrollbar {
-        display: none;
-    }
-    #scroll-indicator {
-        position: fixed;
-        right: 4px;
-        top: 46px;
-        width: 4px;
-        border-radius: 4px;
-        background: rgba(100,100,100,100);
-        opacity: 0;
-        transition: opacity 0.4s;
-        pointer-events: none;
-        z-index: 999;
-    }
-    * {
-        box-sizing: border-box;
-    }
-</style>
-<header></header>
-<main id="content">
-        <button>Setting 1</button><br><br>
-        <button>Setting 2</button><br><br>
-        <button>Setting 3</button><br><br>
-        <button>Setting 4</button><br><br>
-        <button>Setting 5</button><br><br>
-        <button>Setting 6</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-        <button>Setting 7</button><br><br>
-</main>
-<div id="scroll-indicator"></div>
-<footer></footer>
-<script>
-    const content = document.getElementById("content");
-const indicator = document.getElementById("scroll-indicator");
-let hideTimer;
+        /* Dasar & Layout Utama */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #ffebcd;
+            display: flex;
+            justify-content: center;
+        }
+        .app {
+            width: 100%;
+            max-width: 480px;
+            background: #f5f5DC;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
 
-function updateIndicator() {
-    const scrollTop = content.scrollTop;
-    const scrollHeight = content.scrollHeight;
-    const clientHeight = content.clientHeight;
+        /* Header */
+        .header {
+            background: #1976d2;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            max-width: 480px;
+            z-index: 100;
+            box-sizing: border-box;
+        }
 
-    const ratio = clientHeight / scrollHeight;
-    const indicatorHeight = Math.max(clientHeight * ratio, 20);
+        /* Konten */
+        .content {
+            padding: 70px 15px 80px 15px;
+        }
+        .page {
+            display: none; /* Sembunyikan semua halaman di awal */
+            flex-direction: column;
+            gap: 12px;
+        }
+        .page.active-page {
+            display: flex; /* Tampilkan halaman yang aktif */
+        }
 
-    const maxScroll = scrollHeight - clientHeight;
-    const top = (scrollTop / maxScroll) * (clientHeight - indicatorHeight);
+        /* Elemen Kotak & Form */
+        .kotak {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        input, select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .btn-submit {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-submit:active {
+            background: #1565c0;
+        }
 
-    const headerHeight = document.querySelector("header").offsetHeight;
-    indicator.style.height = indicatorHeight + "px";
-    indicator.style.top = (headerHeight + top) + "px";
+        /* Navigasi Bawah */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            background: #ffffff;
+            border-top: 1px solid #ccc;
+            padding: 5px 0;
+            z-index: 100;
+        }
+        .btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn.active {
+            color: #1976d2;
+            font-weight: bold;
+        }
+        .icon {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
 
-    indicator.style.opacity = 1;
+    <div class="app">
+        <div class="header" id="app-title">Beranda</div>
 
-    clearTimeout(hideTimer);
-    hideTimer = setTimeout(() => {
-        indicator.style.opacity = 0;
-    }, 700);
-}
+        <main class="content">
+            <div id="home" class="page active-page">
+                <div class="kotak"><b>Selamat Datang!</b><br>Ini adalah dashboard utama kamu hari ini.</div>
+                <div class="kotak">Item 1: Pengumuman Baru</div>
+                <div class="kotak">Item 2: Tugas Terdekat</div>
+            </div>
 
-content.addEventListener("scroll", updateIndicator);
+            <div id="menu" class="page">
+                <div class="kotak">📁 Materi Pelajaran</div>
+                <div class="kotak">📝 Latihan Soal</div>
+                <div class="kotak">📊 Statistik Belajar</div>
+            </div>
 
-</script>
+            <div id="info" class="page">
+                <div class="kotak">
+                    <h3>Tentang Aplikasi</h3>
+                    <p>Versi: 2.1.0 (Stable)<br>Dibuat untuk belajar web development.</p>
+                </div>
+            </div>
+
+            <div id="profil" class="page">
+                <div class="kotak">
+                    <h3>Edit Profil</h3>
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" placeholder="Masukkan nama..." id="inputNama">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" placeholder="contoh@mail.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Kelas</label>
+                            <select>
+                                <option>Pemula</option>
+                                <option>Menengah</option>
+                                <option>Mahir</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-submit">Simpan Perubahan</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <div class="btn active" data-target="home" data-title="Beranda">
+                <span class="icon">🏠</span>Home
+            </div>
+            <div class="btn" data-target="menu" data-title="Daftar Menu">
+                <span class="icon">📜</span>Menu
+            </div>
+            <div class="btn" data-target="info" data-title="Informasi">
+                <span class="icon">ℹ️</span>Info
+            </div>
+            <div class="btn" data-target="profil" data-title="Profil Saya">
+                <span class="icon">👤</span>Profil
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        const buttons = document.querySelectorAll('.btn');
+        const pages = document.querySelectorAll('.page');
+        const appTitle = document.getElementById('app-title');
+
+        // Fungsi Perpindahan Tab
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // 1. Update UI Tombol
+                document.querySelector('.btn.active').classList.remove('active');
+                this.classList.add('active');
+
+                // 2. Update Judul Header
+                appTitle.innerText = this.getAttribute('data-title');
+
+                // 3. Update Halaman
+                const target = this.getAttribute('data-target');
+                pages.forEach(p => {
+                    p.classList.remove('active-page');
+                });
+                document.getElementById(target).classList.add('active-page');
+            });
+        });
+
+        // Fungsi Form Submit
+        const form = document.getElementById('profileForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah reload halaman
+            const nama = document.getElementById('inputNama').value;
+            alert('Halo ' + (nama || 'User') + '! Data kamu berhasil disimpan (simulasi).');
+        });
+    </script>
 </body>
 </html>
