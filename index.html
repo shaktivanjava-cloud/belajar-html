@@ -1,217 +1,303 @@
+editor v8.html
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>BElAJAR v2 - Full App</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        /* Dasar & Layout Utama */
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #ffebcd;
-            display: flex;
-            justify-content: center;
-        }
-        .app {
-            width: 100%;
-            max-width: 480px;
-            background: #f5f5DC;
-            min-height: 100vh;
-            position: relative;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
+<meta charset="UTF-8">
+<title>Power Editor Pro (Stable)</title>
 
-        /* Header */
-        .header {
-            background: #1976d2;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-weight: bold;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            max-width: 480px;
-            z-index: 100;
-            box-sizing: border-box;
-        }
+<!--
+==================================================
+  Power Editor
+  ------------------------------------------------
+  Version      : 1.0 (Stable)
+  Codename     : Genesis
+  Channel      : Isolated Sandbox Editor
 
-        /* Konten */
-        .content {
-            padding: 70px 15px 80px 15px;
-        }
-        .page {
-            display: none; /* Sembunyikan semua halaman di awal */
-            flex-direction: column;
-            gap: 12px;
-        }
-        .page.active-page {
-            display: flex; /* Tampilkan halaman yang aktif */
-        }
+  Author       : latib kanafi
+  Created      : 2026-02-07
+  Last Update  : 2026-02-07
 
-        /* Elemen Kotak & Form */
-        .kotak {
-            background: white;
-            border: 1px solid #ccc;
-            padding: 15px;
-            border-radius: 8px;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-        input, select {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        .btn-submit {
-            background: #1976d2;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .btn-submit:active {
-            background: #1565c0;
-        }
+  Description  :
+  ------------------------------------------------
+  Power Editor adalah editor ringan berbasis web
+  dengan eksekusi kode terisolasi (sandbox).
+  Dirancang untuk eksplorasi, pembelajaran,
+  dan pengujian logika tanpa efek samping global.
 
-        /* Navigasi Bawah */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            max-width: 480px;
-            display: flex;
-            background: #ffffff;
-            border-top: 1px solid #ccc;
-            padding: 5px 0;
-            z-index: 100;
-        }
-        .btn {
-            flex: 1;
-            text-align: center;
-            padding: 10px 0;
-            font-size: 12px;
-            color: #666;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .btn.active {
-            color: #1976d2;
-            font-weight: bold;
-        }
-        .icon {
-            display: block;
-            font-size: 20px;
-            margin-bottom: 2px;
-        }
-    </style>
+  Core Principles :
+  ------------------------------------------------
+  1. Single File Architecture
+  2. Global Scope Isolation
+  3. Explicit Execution Control
+  4. Human-Readable Logic
+  5. No Hidden Side Effects
+
+  Notes :
+  ------------------------------------------------
+  - Semua fitur baru wajib dicatat dengan
+    tanggal & waktu penambahan.
+  - Tidak ada dependensi eksternal.
+  - Fokus pada kejelasan, bukan kecepatan.
+
+==================================================
+-->
+
+
+<style>
+/* =================================================
+   BASE LAYOUT (FIXED)
+   Added: 2026-02-07 15:40
+   ================================================= */
+html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #1e1e1e;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* =================================================
+   TOOLBAR
+   ================================================= */
+#toolbar {
+    height: 55px;
+    padding: 10px;
+    background: #1e1e1e;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    color: white;
+}
+
+#toolbar button {
+    padding: 6px 15px;
+    background: #333;
+    border: 1px solid #555;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#toolbar button:hover {
+    background: #444;
+    border-color: #007acc;
+}
+
+.btn-new {
+    background: #007acc;
+}
+
+/* =================================================
+   MAIN AREA (EDITOR + CONSOLE)
+   ================================================= */
+#main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#editor {
+    flex: 1;
+}
+
+/* =================================================
+   CONSOLE PANEL
+   Added: 2026-02-07 14:10
+   ================================================= */
+#console {
+    height: 160px;
+    background: #111;
+    border-top: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+}
+
+#console-header {
+    background: #1e1e1e;
+    padding: 6px 10px;
+    font-size: 13px;
+    color: #ccc;
+    display: flex;
+    justify-content: space-between;
+}
+
+#console-body {
+    flex: 1;
+    margin: 0;
+    padding: 8px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+}
+
+.log   { color: #0f0; }
+.warn  { color: #ff0; }
+.error { color: #f55; cursor: pointer; }
+</style>
 </head>
+
 <body>
 
-    <div class="app">
-        <div class="header" id="app-title">Beranda</div>
+<div id="toolbar">
+    <button class="btn-new" onclick="newFile()">📄 New</button>
+    <button onclick="saveFile()">💾 Save</button>
+    <button onclick="preview()">👁️ Preview</button>
+</div>
 
-        <main class="content">
-            <div id="home" class="page active-page">
-                <div class="kotak"><b>Selamat Datang!</b><br>Ini adalah dashboard utama kamu hari ini.</div>
-                <div class="kotak">Item 1: Pengumuman Baru</div>
-                <div class="kotak">Item 2: Tugas Terdekat</div>
-            </div>
+<div id="main">
+    <div id="editor"></div>
 
-            <div id="menu" class="page">
-                <div class="kotak">📁 Materi Pelajaran</div>
-                <div class="kotak">📝 Latihan Soal</div>
-                <div class="kotak">📊 Statistik Belajar</div>
-            </div>
-
-            <div id="info" class="page">
-                <div class="kotak">
-                    <h3>Tentang Aplikasi</h3>
-                    <p>Versi: 2.1.0 (Stable)<br>Dibuat untuk belajar web development.</p>
-                </div>
-            </div>
-
-            <div id="profil" class="page">
-                <div class="kotak">
-                    <h3>Edit Profil</h3>
-                    <form id="profileForm">
-                        <div class="form-group">
-                            <label>Nama Lengkap</label>
-                            <input type="text" placeholder="Masukkan nama..." id="inputNama">
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" placeholder="contoh@mail.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Kelas</label>
-                            <select>
-                                <option>Pemula</option>
-                                <option>Menengah</option>
-                                <option>Mahir</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn-submit">Simpan Perubahan</button>
-                    </form>
-                </div>
-            </div>
-        </main>
-
-        <nav class="bottom-nav">
-            <div class="btn active" data-target="home" data-title="Beranda">
-                <span class="icon">🏠</span>Home
-            </div>
-            <div class="btn" data-target="menu" data-title="Daftar Menu">
-                <span class="icon">📜</span>Menu
-            </div>
-            <div class="btn" data-target="info" data-title="Informasi">
-                <span class="icon">ℹ️</span>Info
-            </div>
-            <div class="btn" data-target="profil" data-title="Profil Saya">
-                <span class="icon">👤</span>Profil
-            </div>
-        </nav>
+    <div id="console">
+        <div id="console-header">
+            🧪 Console
+            <button onclick="clearConsole()">Clear</button>
+        </div>
+        <pre id="console-body"></pre>
     </div>
+</div>
 
-    <script>
-        const buttons = document.querySelectorAll('.btn');
-        const pages = document.querySelectorAll('.page');
-        const appTitle = document.getElementById('app-title');
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+<script>
+/* =================================================
+   MONACO INIT (FIXED)
+   ================================================= */
+let editor;
+let previewWindow = null;
 
-        // Fungsi Perpindahan Tab
-        buttons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                // 1. Update UI Tombol
-                document.querySelector('.btn.active').classList.remove('active');
-                this.classList.add('active');
+const TEMPLATE = `<!DOCTYPE html>
+<html>
+<body>
 
-                // 2. Update Judul Header
-                appTitle.innerText = this.getAttribute('data-title');
+<script>
+console.log("Editor siap.");
+</script>
 
-                // 3. Update Halaman
-                const target = this.getAttribute('data-target');
-                pages.forEach(p => {
-                    p.classList.remove('active-page');
-                });
-                document.getElementById(target).classList.add('active-page');
-            });
-        });
+</body>
+</html>`;
 
-        // Fungsi Form Submit
-        const form = document.getElementById('profileForm');
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // Mencegah reload halaman
-            const nama = document.getElementById('inputNama').value;
-            alert('Halo ' + (nama || 'User') + '! Data kamu berhasil disimpan (simulasi).');
-        });
-    </script>
+require.config({
+    paths: { vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs" }
+});
+
+require(["vs/editor/editor.main"], function () {
+    editor = monaco.editor.create(
+        document.getElementById("editor"),
+        {
+            value: localStorage.getItem("saved_code") || TEMPLATE,
+            language: "html",
+            theme: "vs-dark",
+            automaticLayout: true,
+            minimap: { enabled: false },
+            fontSize: 14
+        }
+    );
+
+    editor.onDidChangeModelContent(() => {
+        localStorage.setItem("saved_code", editor.getValue());
+    });
+});
+
+/* =================================================
+   FILE OPS (FIXED)
+   ================================================= */
+function newFile() {
+    if (!editor) return;
+    editor.setValue(TEMPLATE);
+}
+
+function saveFile() {
+    const blob = new Blob([editor.getValue()], { type: "text/html" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "index.html";
+    a.click();
+}
+
+/* =================================================
+   CONSOLE CORE
+   ================================================= */
+function logToConsole(type, message, line) {
+    const body = document.getElementById("console-body");
+    const time = new Date().toLocaleTimeString();
+    const span = document.createElement("span");
+
+    span.className = type;
+    span.textContent = `[${time}] [${type}] ${message}\n`;
+
+    if (type === "error" && line) {
+        span.onclick = () => {
+            editor.revealLineInCenter(line);
+            editor.setPosition({ lineNumber: line, column: 1 });
+            editor.focus();
+        };
+    }
+
+    body.appendChild(span);
+    body.scrollTop = body.scrollHeight;
+}
+
+function clearConsole() {
+    document.getElementById("console-body").textContent = "";
+}
+
+/* =================================================
+   PREVIEW (CORRECT ISOLATION)
+   ================================================= */
+function preview() {
+    if (!previewWindow || previewWindow.closed) {
+        previewWindow = window.open();
+    }
+
+    const userHTML = editor.getValue();
+
+    const consoleHook = `
+<script>
+(function(){
+    function send(type, msg, line){
+        window.opener.postMessage({ type, msg, line }, "*");
+    }
+
+    ["log","warn","error"].forEach(t=>{
+        const old = console[t];
+        console[t] = function(...a){
+            old.apply(console,a);
+            send(t, a.join(" "));
+        };
+    });
+
+    window.onerror = function(msg, src, line){
+        send("error", msg, line);
+    };
+
+    window.onunhandledrejection = function(e){
+        send("error", String(e.reason), null);
+    };
+})();
+</script>
+`;
+
+    previewWindow.document.open();
+    previewWindow.document.write(
+        userHTML.replace("</body>", consoleHook + "</body>")
+    );
+    previewWindow.document.close();
+}
+
+/* =================================================
+   MESSAGE BRIDGE
+   ================================================= */
+window.addEventListener("message", e => {
+    if (!e.data) return;
+    logToConsole(e.data.type, e.data.msg, e.data.line);
+});
+</script>
+
 </body>
 </html>
